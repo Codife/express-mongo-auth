@@ -152,6 +152,6 @@ const inventorySchema = new mongoose.Schema({
   ],
 });
 
-const Inventory = mongoose.model("Inventory", inventorySchema);
+const Inventory = mongoose.model("Inventory_item", inventorySchema);
 
 module.exports = Inventory;

@@ -20,7 +20,7 @@ router.post("/signin", async (req, res) => {
       return res.status(401).json({ message: "Incorrect password" });
     }
 
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ userId: user }, process.env.JWT_SECRET);
 
     return res.status(200).json({ message: "Sign-in successful", token });
   } catch (error) {
@@ -30,7 +30,7 @@ router.post("/signin", async (req, res) => {
 });
 
 router.post("/signup", async (req, res) => {
-  const { name, email, password, userType } = req.body;
+  const { name, email, password, userType, userRole, phoneNumber } = req.body;
 
   try {
     const existingUser = await User.findOne({ email });
@@ -46,11 +46,13 @@ router.post("/signup", async (req, res) => {
       email,
       password: hashedPassword,
       userType,
+      userRole,
+      phoneNumber,
     });
 
     await newUser.save();
 
-    const token = jwt.sign({ userId: newUser._id }, secretKey);
+    const token = jwt.sign({ userId: newUser }, process.env.JWT_SECRET);
 
     return res.status(201).json({ message: "Sign-up successful", token });
   } catch (error) {
