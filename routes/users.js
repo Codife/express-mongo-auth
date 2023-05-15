@@ -3,8 +3,85 @@ var router = express.Router();
 const User = require("../models/UserSchema");
 const bcrypt = require("bcryptjs");
 const { userTypes } = require("../constants");
+const verifyJWT = require("../middlewares/auth");
+const checkUserRole = require("../middlewares/isAdmin");
 
-router.post("/create", async (req, res) => {
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     User:
+ *       type: object
+ *       properties:
+ *         name:
+ *           type: string
+ *         email:
+ *           type: string
+ *         password:
+ *           type: string
+ *         userType:
+ *           type: string
+ *           enum: ['Admin', 'User', 'Lead']
+ *         userRole:
+ *           type: string
+ *         phoneNumber:
+ *           type: string
+ *         team:
+ *           type: string
+ *           format: uuid
+ */
+
+/**
+ * @swagger
+ * /create:
+ *   post:
+ *     summary: Create a new user
+ *     tags:
+ *       - Users
+ *     security:
+ *       - JWT: []
+ *     requestBody:
+ *       description: User object
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *     responses:
+ *       '201':
+ *         description: User created successfully
+ *       '409':
+ *         description: Email is already registered
+ *       '500':
+ *         description: Internal server error
+ */
+
+/**
+ * @swagger
+ * /user-types:
+ *   get:
+ *     summary: Get available user types
+ *     tags:
+ *       - Users
+ *     security:
+ *       - JWT: []
+ *     responses:
+ *       '200':
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 userTypes:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ */
+
+router.post("/create", verifyJWT, checkUserRole("Admin"), async (req, res) => {
   const { name, email, password, userType, userRole, phoneNumber } = req.body;
 
   try {
