@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { userTypes } = require("../constants");
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -17,7 +18,7 @@ const userSchema = new mongoose.Schema({
   userType: {
     type: String,
     required: true,
-    enum: ["Admin", "User", "Lead"],
+    enum: userTypes,
   },
   userRole: {
     type: String,
