@@ -21,8 +21,7 @@ router.post("/signin", async (req, res) => {
     }
 
     const token = jwt.sign({ userId: user }, process.env.JWT_SECRET);
-
-    return res.status(200).json({ message: "Sign-in successful", token });
+    return res.status(200).json({ message: "Sign-in successful", token, user });
   } catch (error) {
     console.error("Error during sign-in", error);
     return res.status(500).json({ message: "Internal server error" });

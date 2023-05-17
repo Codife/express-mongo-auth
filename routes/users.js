@@ -104,12 +104,26 @@ router.post("/create", verifyJWT, checkUserRole("Admin"), async (req, res) => {
 
     await newUser.save();
 
-    return res.status(201).json({ message: "Sign-up successful", token });
+    return res.status(201).json({ message: "Sign-up successful", newUser });
   } catch (error) {
     console.error("Error during sign-up", error);
     return res.status(500).json({ message: "Internal server error" });
   }
 });
+
+router.get(
+  "/get-all-users",
+  verifyJWT,
+  checkUserRole("Admin"),
+  async (req, res) => {
+    try {
+      const users = await User.find();
+      res.status(200).json(users);
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  }
+);
 
 router.get("/user-types", async (req, res) => {
   return res.status(200).json({ message: "Success", userTypes: userTypes });
