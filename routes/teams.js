@@ -31,4 +31,18 @@ router.get("/", verifyJWT, checkUserRole("Admin"), async (req, res) => {
   }
 });
 
+router.get("/:id", verifyJWT, checkUserRole("Admin"), async (req, res) => {
+  try {
+    const { id } = req.params;
+    const teams = await Team.findById(id);
+    await Team.populate(teams, {
+      path: "teamLeads teamMembers",
+      select: "-password",
+    });
+    res.status(200).json(teams);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 module.exports = router;
