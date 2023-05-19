@@ -111,6 +111,35 @@ router.post("/create", verifyJWT, checkUserRole("Admin"), async (req, res) => {
   }
 });
 
+router.put("/edit/:id", verifyJWT, checkUserRole("Admin"), async (req, res) => {
+  const { name, email, password, userType, userRole, phoneNumber, team } =
+    req.body;
+  const { id } = req.params;
+
+  try {
+    const user = await User.findById(id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.name = name;
+    user.email = email;
+    user.password = await bcrypt.hash(password, 10);
+    user.userType = userType;
+    user.userRole = userRole;
+    user.phoneNumber = phoneNumber;
+    user.team = team;
+
+    await user.save();
+
+    return res.status(200).json({ message: "User updated successfully", user });
+  } catch (error) {
+    console.error("Error during user update", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 router.get(
   "/get-all-users",
   verifyJWT,
@@ -119,6 +148,22 @@ router.get(
     try {
       const users = await User.find();
       res.status(200).json(users);
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  }
+);
+
+router.get(
+  "/get-user-by-type/:userType",
+  verifyJWT,
+  checkUserRole("Admin"),
+  async (req, res) => {
+    const { userType } = req.params;
+    try {
+      const users = await User.find({ userType: userType });
+      console.log("USERS", users);
+      res.status(200).json({ message: "Success", users });
     } catch (err) {
       res.status(500).json({ message: err.message });
     }
