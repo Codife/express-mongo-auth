@@ -33,7 +33,16 @@ router.post(
       for (const category in items) {
         if (Object.hasOwnProperty.call(items, category)) {
           const details = items[category];
-          inventory[category].push(details);
+          details.forEach((item, i) => {
+            const itemExists = inventory[category].findIndex(
+              (i) => i.model === item.model
+            );
+            if (itemExists > -1) {
+              inventory[category][itemExists] = item;
+            } else {
+              inventory[category].push(item);
+            }
+          });
         }
       }
 

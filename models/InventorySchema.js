@@ -15,15 +15,14 @@ const inventorySchema = new mongoose.Schema({
         type: String,
         required: true,
       },
+      quantity: {
+        type: Number,
+        required: true,
+      },
     },
   ],
-  storageDevices: [
+  SSDs: [
     {
-      type: {
-        type: String,
-        required: true,
-        enum: ["HDD", "SSD"],
-      },
       company: {
         type: String,
         required: true,
@@ -34,6 +33,30 @@ const inventorySchema = new mongoose.Schema({
       },
       model: {
         type: String,
+        required: true,
+      },
+      quantity: {
+        type: Number,
+        required: true,
+      },
+    },
+  ],
+  HDDs: [
+    {
+      company: {
+        type: String,
+        required: true,
+      },
+      size: {
+        type: Number,
+        required: true,
+      },
+      model: {
+        type: String,
+        required: true,
+      },
+      quantity: {
+        type: Number,
         required: true,
       },
     },
@@ -50,6 +73,10 @@ const inventorySchema = new mongoose.Schema({
       },
       model: {
         type: String,
+        required: true,
+      },
+      quantity: {
+        type: Number,
         required: true,
       },
     },
@@ -72,6 +99,10 @@ const inventorySchema = new mongoose.Schema({
         type: String,
         required: true,
       },
+      quantity: {
+        type: Number,
+        required: true,
+      },
     },
   ],
   psu: [
@@ -88,6 +119,10 @@ const inventorySchema = new mongoose.Schema({
         type: String,
         required: true,
       },
+      quantity: {
+        type: Number,
+        required: true,
+      },
     },
   ],
   headphone: [
@@ -98,6 +133,10 @@ const inventorySchema = new mongoose.Schema({
       },
       model: {
         type: String,
+        required: true,
+      },
+      quantity: {
+        type: Number,
         required: true,
       },
     },
@@ -112,6 +151,10 @@ const inventorySchema = new mongoose.Schema({
         type: String,
         required: true,
       },
+      quantity: {
+        type: Number,
+        required: true,
+      },
     },
   ],
   keyboard: [
@@ -122,6 +165,10 @@ const inventorySchema = new mongoose.Schema({
       },
       model: {
         type: String,
+        required: true,
+      },
+      quantity: {
+        type: Number,
         required: true,
       },
     },
@@ -136,6 +183,10 @@ const inventorySchema = new mongoose.Schema({
         type: String,
         required: true,
       },
+      quantity: {
+        type: Number,
+        required: true,
+      },
     },
   ],
   fan: [
@@ -146,6 +197,10 @@ const inventorySchema = new mongoose.Schema({
       },
       model: {
         type: String,
+        required: true,
+      },
+      quantity: {
+        type: Number,
         required: true,
       },
     },

@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const User = require("../models/UserSchema");
-const bcrypt = require("bcryptjs");
+const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
 
 router.post("/signin", async (req, res) => {
@@ -15,7 +15,7 @@ router.post("/signin", async (req, res) => {
     }
 
     const result = await bcrypt.compare(password, user.password);
-
+    console.log(result, password, user.password);
     if (!result) {
       return res.status(401).json({ message: "Incorrect password" });
     }

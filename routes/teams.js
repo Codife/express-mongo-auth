@@ -15,6 +15,7 @@ router.post("/create", verifyJWT, checkUserRole("Admin"), async (req, res) => {
     const newTeam = await team.save();
     res.status(201).json(newTeam);
   } catch (err) {
+    console.log(err)
     res.status(400).json({ message: err.message });
   }
 });

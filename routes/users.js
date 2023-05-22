@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const User = require("../models/UserSchema");
-const bcrypt = require("bcryptjs");
+const bcrypt = require('bcrypt');
 const { userTypes } = require("../constants");
 const verifyJWT = require("../middlewares/auth");
 const checkUserRole = require("../middlewares/isAdmin");
