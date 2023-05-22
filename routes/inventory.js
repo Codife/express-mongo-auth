@@ -35,10 +35,10 @@ router.post(
           const details = items[category];
           details.forEach((item, i) => {
             const itemExists = inventory[category].findIndex(
-              (i) => i.model === item.model
+              (i) => i.model.toLowerCase() === item.model.toLowerCase()
             );
             if (itemExists > -1) {
-              inventory[category][itemExists] = item;
+              inventory[category][itemExists].quantity += item.quantity;
             } else {
               inventory[category].push(item);
             }
